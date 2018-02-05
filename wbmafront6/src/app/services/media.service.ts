@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {User} from '../models/user';
+import {Media} from '../models/media';
 
 @Injectable()
 export class MediaService {
@@ -42,6 +43,14 @@ export class MediaService {
       console.log(error);
       this.status = error.message;
     });
+  }
+
+  public uploadFile(formdata: FormData) {
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
+    };
+    console.log('token');
+    return this.http.post(this.apiUrl + '/media', formdata, settings);
   }
 
   public getUserData() {
